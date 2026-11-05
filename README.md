@@ -28,3 +28,56 @@ Requerimientos
 
 * Patrón Decorator: Aplicado en la creación dinámica de recetas
 * Patrón Singleton: Implementado en el conversor de medidas global para estandarizar las conversiones en memoria.
+
+## 6. Relaciones entre modelos
+
+Cada receta puede contener varios ingredientes y varios pasos de preparación. Estas relaciones son uno a muchos y se representan con colecciones dentro de el archivo `Receta` y referencias hacia la receta en las entidades hijas.
+
+```mermaid
+erDiagram
+    RECETA ||--o{ INGREDIENTE : contiene
+    RECETA ||--o{ PASO_PREPARACION : contiene
+
+    RECETA {
+        bigint id PK
+        string nombre
+        string descripcion
+    }
+
+    INGREDIENTE {
+        bigint id PK
+        string nombre
+        string cantidad
+        string unidad
+        bigint receta_id FK
+    }
+
+    PASO_PREPARACION {
+        bigint id PK
+        integer orden
+        string descripcion
+        bigint receta_id FK
+    }
+```
+
+Ejemplo de peticion utilizando colecciones:
+
+```json
+{
+  "nombre": "Pasta al pesto",
+  "descripcion": "Receta de pasta con pesto casero",
+  "ingredientes": [
+    {
+      "nombre": "Pasta",
+      "cantidad": "200",
+      "unidad": "gramos"
+    }
+  ],
+  "pasos": [
+    {
+      "orden": 1,
+      "descripcion": "Hervir la pasta"
+    }
+  ]
+}
+```

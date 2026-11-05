@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.models.Receta;
-import com.example.demo.repo.RecetaRepository;
+import com.example.demo.repo.RecetaRepositorio;
 
 @RestController
 public class RecetaController {
-    private final RecetaRepository repo;
+    private final RecetaRepositorio repo;
 
-    public RecetaController(RecetaRepository repo) {
+    public RecetaController(RecetaRepositorio repo) {
         this.repo = repo;
     }
 
@@ -23,6 +23,12 @@ public class RecetaController {
 
     @PostMapping("/recetas")
     public Receta addReceta(@RequestBody Receta receta) {
+        if (receta.getIngredientes() != null) {
+            receta.getIngredientes().forEach(ingrediente -> ingrediente.setReceta(receta));
+        }
+        if (receta.getPasos() != null) {
+            receta.getPasos().forEach(paso -> paso.setReceta(receta));
+        }
         return repo.save(receta);
     }
 }
