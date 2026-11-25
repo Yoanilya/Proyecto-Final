@@ -5,7 +5,6 @@ Una API REST diseñada para que chefs y estudiantes de gastronomía puedan docum
 
 ## 2. Lista de integrantes del equipo
 * Morales Franco Clara Zairy
-* Becerra Salazar Valeria
 * Mendoza Vásquez Manuel Heyoan
 
 ## 3. Tabla de requerimientos (5)
