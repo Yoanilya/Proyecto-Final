@@ -30,4 +30,12 @@ public class PasoPreparacion {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "receta_id", nullable = false)
     private Receta receta;
+
+    public Receta getReceta() {
+    return receta;
+}
+
+    public void setReceta(Receta receta) {
+    this.receta = receta;
+    }
 }
