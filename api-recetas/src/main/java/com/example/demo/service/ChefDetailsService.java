@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.models.Chef;
-import com.example.demo.repositorio.ChefRepositorio;
+import com.example.demo.repo.ChefRepositorio;
 import java.util.Collections;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
