@@ -1,15 +1,17 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "tecnica_culinaria")
 public class TecnicaCulinaria {
 
     @Id
@@ -19,19 +21,18 @@ public class TecnicaCulinaria {
     private String nombre;
     private String descripcion;
 
-    @ManyToMany (mappedBy = "tecnicasCulinarias")
+    @ManyToMany(mappedBy = "tecnicasCulinarias")
     @JsonIgnore
     private Set<Receta> recetas = new HashSet<>();
 
-    public TecnicaCulinaria() {}
+    public TecnicaCulinaria() {
+    }
 
-    
     public TecnicaCulinaria(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
 
-    // Getters y Setters
     public Long getId() {
         return id;
     }

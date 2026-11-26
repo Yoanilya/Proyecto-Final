@@ -6,22 +6,30 @@ import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import javax.crypto.SecretKey;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class JwtService {
 
-    // Usa una clave de al menos 32 caracteres (idealmente en application.properties)
-    private static final String SECRET = "clave-secreta-super-segura-para-jwt-de-32-chars-minimo";
-    private static final long EXPIRATION_MS = 1000 * 60 * 60 * 24; // 24 horas
+    private final String secret;
+    private final long expirationMs;
+
+    public JwtService(
+            @Value("${jwt.secret:clave-secreta-super-segura-para-jwt-de-32-chars-minimo}") String secret,
+            @Value("${jwt.expiration-ms:86400000}") long expirationMs
+    ) {
+        this.secret = secret;
+        this.expirationMs = expirationMs;
+    }
 
     private SecretKey getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateToken(String username) {
         Date now = new Date();
-        Date expiry = new Date(now.getTime() + EXPIRATION_MS);
+        Date expiry = new Date(now.getTime() + expirationMs);
 
         return Jwts.builder()
                 .subject(username)
